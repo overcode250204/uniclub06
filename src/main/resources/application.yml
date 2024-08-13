@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: uniclub06
+  datasource:
+    url: jdbc:mysql://localhost:3307/uniclub
+    username: root
+    password: admin123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+
+jwts:
+  key: REFLP1wwS03zYvwkhKWPhu8oAj6vEgAezAHVNtd9xog=
