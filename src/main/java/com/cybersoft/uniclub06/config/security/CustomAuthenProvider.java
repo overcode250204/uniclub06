@@ -1,6 +1,7 @@
 package com.cybersoft.uniclub06.config.security;
 
 import com.cybersoft.uniclub06.dto.RoleDTO;
+import com.cybersoft.uniclub06.exception.AuthenException;
 import com.cybersoft.uniclub06.request.AuthenRequest;
 import com.cybersoft.uniclub06.service.AuthenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,7 @@ public class CustomAuthenProvider implements AuthenticationProvider {
                     .map(item -> new SimpleGrantedAuthority(item.getName())).toList();
             return new UsernamePasswordAuthenticationToken("", "", grantedAuthorityList);
         } else {
-            return null;
+            throw new AuthenException("Fail to authenticate user");
         }
 
 
