@@ -10,3 +10,6 @@ spring:
 
 jwts:
   key: REFLP1wwS03zYvwkhKWPhu8oAj6vEgAezAHVNtd9xog=
+
+root:
+  path: C:/Users/ACER/Desktop/uploads

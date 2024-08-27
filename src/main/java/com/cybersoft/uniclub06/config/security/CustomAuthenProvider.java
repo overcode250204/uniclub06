@@ -1,6 +1,7 @@
 package com.cybersoft.uniclub06.config.security;
 
 import com.cybersoft.uniclub06.dto.RoleDTO;
+import com.cybersoft.uniclub06.exception.AuthenException;
 import com.cybersoft.uniclub06.request.AuthenRequest;
 import com.cybersoft.uniclub06.service.AuthenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +31,19 @@ public class CustomAuthenProvider implements AuthenticationProvider {
 
         List<RoleDTO> roleDTOList = authenService.checkLogin(authenRequest);
         if (!roleDTOList.isEmpty()) {
-            List<GrantedAuthority> grantedAuthorityList = new ArrayList<>();// bữa sau chỉnh stream API
-            for (RoleDTO roleDTO : roleDTOList) {
-                SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(roleDTO.getName());
-                grantedAuthorityList.add(simpleGrantedAuthority);
-            }
+            //steam API
+            //map():nếu như dữ liệu là 1 mảng thì nó sẽ giúp cho mình duyệt mảng/ đối tượng và trong quá trình xữ lí mảng/ đối tượng và mùn sẽ lí logic code thì có thể từ kiểu dữ liệu ban đầu thành 1 kiểu dữ liệu khác được lun
+
+//            List<GrantedAuthority> grantedAuthorityList = new ArrayList<>();// bữa sau chỉnh stream API
+//            for (RoleDTO roleDTO : roleDTOList) {
+//                SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(roleDTO.getName());
+//                grantedAuthorityList.add(simpleGrantedAuthority);
+//            }
+            List<SimpleGrantedAuthority> grantedAuthorityList = roleDTOList.stream()
+                    .map(item -> new SimpleGrantedAuthority(item.getName())).toList();
             return new UsernamePasswordAuthenticationToken("", "", grantedAuthorityList);
         } else {
-            return null;
+            throw new AuthenException("Fail to authenticate user");
         }
 
 

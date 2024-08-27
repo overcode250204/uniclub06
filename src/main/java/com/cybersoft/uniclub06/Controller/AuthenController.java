@@ -8,7 +8,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Encoders;
-import org.apache.catalina.User;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +22,7 @@ import javax.crypto.SecretKey;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/authen")
 public class AuthenController {
     @Autowired
@@ -34,7 +35,7 @@ public class AuthenController {
     private ObjectMapper objectMapper = new ObjectMapper();// tranfer object to json
 
     @PostMapping
-    public ResponseEntity<?> authen(@RequestBody AuthenRequest authenRequest) throws JsonProcessingException {
+    public ResponseEntity<?> authen(@Valid @RequestBody AuthenRequest authenRequest) throws JsonProcessingException {
         //Tạo key
         SecretKey secretKey = Jwts.SIG.HS256.key().build();
         //Biến key thành chuỗi để lưu trữ lại
